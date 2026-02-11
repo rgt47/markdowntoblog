@@ -7,7 +7,7 @@ categories: [Quarto, ZZCOLLAB, Blog Development, Documentation, Workflow]
 description: "Learn how to convert standalone markdown documentation into a fully-featured, reproducible blog post using ZZCOLLAB and Quarto. Includes the complete workflow, decision-making process, and a detailed checklist."
 image: "media/images/markdown-to-blog-hero.jpg"
 document-type: "blog"
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
@@ -190,7 +190,7 @@ categories: [Category1, Category2, Category3]
 description: "2-3 sentence summary of the post"
 image: "media/images/hero-image.jpg"
 document-type: "blog"
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
@@ -637,6 +637,12 @@ code
 
 Quarto recognizes: bash, sh, r, python, sql, javascript, html, css, java, etc.
 
+![An organised workspace with notebooks and a laptop on a
+clean desk](media/images/ambiance3.jpg){.img-fluid}
+
+*A well-organised workspace mirrors the structure a good blog
+post brings to technical documentation.*
+
 # Part 12: Best Practices
 
 ## Writing for Web Readers
@@ -741,3 +747,18 @@ Converted to: This blog post (teaching audience how to do it)
 - [Quarto YAML Reference](https://quarto.org/docs/reference/formats/html.html) - Complete YAML options
 - [Git Symlinks](https://git-scm.com/docs/git-ls-files) - How Git handles symlinks
 - [Markdown to Quarto](https://quarto.org/docs/tools/jupyter-notebooks.html) - Quarto format specifics
+
+# Let's Connect
+
+- **GitHub**: [rgt47](https://github.com/rgt47)
+- **Twitter/X**: [@rgt47](https://twitter.com/rgt47)
+- **LinkedIn**: [Ronald Glenn Thomas](https://linkedin.com/in/rgthomaslab)
+- **Email**: [Contact through website](https://rgtlab.org/contact)
+
+I would enjoy hearing from you if you:
+
+- Spot an error or have a correction
+- Have a better approach to any of these workflows
+- Want to share your own documentation-to-blog experience
+- Have questions about ZZCOLLAB or Quarto
+- Just want to connect and talk about reproducible research
