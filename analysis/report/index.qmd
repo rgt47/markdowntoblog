@@ -1,764 +1,628 @@
 ---
-title: "From Markdown to Blog Post: Converting Documentation into a Reproducible ZZCOLLAB Workflow"
-subtitle: "A complete guide to integrating technical reference materials into your Quarto blog system"
+title: "From Markdown to Blog Post: A ZZCOLLAB
+  Conversion Workflow"
+subtitle: >
+  Converting standalone documentation into
+  reproducible blog posts with Quarto
 author: "Ronald G. Thomas"
 date: "2025-12-02"
-categories: [Quarto, ZZCOLLAB, Blog Development, Documentation, Workflow]
-description: "Learn how to convert standalone markdown documentation into a fully-featured, reproducible blog post using ZZCOLLAB and Quarto. Includes the complete workflow, decision-making process, and a detailed checklist."
-image: "media/images/markdown-to-blog-hero.jpg"
+categories:
+  [Quarto, ZZCOLLAB, Blog Development, Workflow]
+description: >
+  I did not really know how to convert standalone
+  markdown documentation into a professional blog
+  post until I developed a systematic workflow using
+  ZZCOLLAB symlinks and Quarto metadata.
+image: "media/images/hero.jpg"
 document-type: "blog"
-draft: false
+draft: true
 execute:
   echo: true
   warning: false
   message: false
 format:
   html:
-    toc: true
-    toc-depth: 3
     code-fold: false
     code-tools: false
 ---
 
-![Converting your documentation into a professional blog post](media/images/markdown-to-blog-concept.jpg){.img-fluid}
+![A workspace with documentation ready for
+conversion into a structured blog
+post](media/images/hero.jpg){.img-fluid
+width=80%}
 
-*A structured workflow for publishing technical documentation with reproducibility built-in*
+*Transforming standalone documentation into
+reproducible, discoverable blog posts.*
 
 # Introduction
 
-You have excellent technical documentation in markdown format. It explains complex processes clearly, includes working code examples, and provides valuable guidance. But it sits as a standalone file on your disk, never reaching the audience that could benefit from it.
+I did not really know how to convert standalone
+markdown documentation into a professional blog
+post until I sat down with a well-written
+technical reference and tried to publish it
+through my Quarto site. The document was clear,
+had working code examples, and covered its topic
+thoroughly. Yet it sat as a flat file on my disk,
+invisible to anyone who might benefit from it.
 
-This post documents how to transform that markdown documentation into a professional, publishable blog post integrated with your Quarto blog system—while maintaining reproducibility through ZZCOLLAB and Docker.
+The gap between a markdown file and a published
+blog post turned out to be narrower than I
+expected, but only if you follow a systematic
+workflow. The ZZCOLLAB framework provides the
+scaffolding: symlinks bridge Quarto's expectations
+with the rrtools research compendium layout, and
+a reproducible Docker environment ensures that
+readers can rebuild the post from source.
 
-## What You'll Learn
+This post documents that conversion workflow from
+start to finish, including the decisions you need
+to make, the directory structure you need to
+create, and the verification steps that prevent
+broken links and missing images from reaching your
+audience.
 
-- **The complete workflow**: Step-by-step process for converting markdown to blog post
-- **Key decisions**: How to structure content for blog format
-- **Technical integration**: Symlinks, Quarto compatibility, and git workflow
-- **Verification steps**: Testing and validation before publication
-- **Troubleshooting**: Common issues and solutions
-- **Timeline**: Realistic expectations (40 minutes total)
+## Motivations
 
-## Why This Matters
+- I had several hundred-line markdown documents
+  sitting in project directories that no one
+  outside the project would ever find.
+- Search engines cannot index a markdown file on a
+  local disk; a published blog post reaches a
+  broader audience.
+- I wanted a repeatable process so that converting
+  future documentation would take minutes rather
+  than hours.
+- The ZZCOLLAB dual-symlink system was already
+  solving the Quarto-versus-rrtools path conflict,
+  and I wanted to document how to use it for
+  documentation conversion specifically.
+- I needed a pre-publication checklist to prevent
+  the embarrassment of publishing posts with
+  broken image paths and missing YAML fields.
 
-Blog posts discoverable through search and social sharing reach a broader audience than markdown files in your project directories. Using ZZCOLLAB ensures:
+## Objectives
 
-- **Reproducibility** - Docker + renv lock exact environment
-- **Discoverability** - Integrated with your blog's search and tagging
-- **Professionalism** - Proper metadata, structure, and styling
-- **Maintainability** - Version controlled and easily updated
-- **Extensibility** - Can add data analysis, visualizations, or interactive elements later
+1. Walk through the complete workflow for
+   converting a standalone markdown file into a
+   ZZCOLLAB-compatible Quarto blog post.
+2. Explain the dual-symlink system that reconciles
+   Quarto's directory expectations with the rrtools
+   research compendium layout.
+3. Provide concrete guidance on YAML frontmatter,
+   media asset management, and content adaptation.
+4. Deliver a pre-publication checklist covering
+   content, metadata, media, structure, and
+   testing.
 
-# Part 1: Prerequisites and Planning
+I am documenting my learning process here. If you
+spot errors or have better approaches, please let
+me know.
 
-## Tools You'll Need
+![A clean desk with organised notes and a laptop
+displaying a code editor](media/images/ambiance1.jpg
+){.img-fluid}
 
-**Must Have**:
-- ZZCOLLAB framework (installed)
-- Quarto (for rendering)
-- Git (version control)
-- Bash shell
+*A structured workflow turns documentation into
+discoverable content.*
 
-**Nice to Have**:
+# Prerequisites and Setup
+
+You will need the following tools installed before
+starting:
+
+**Required:**
+
+- ZZCOLLAB framework (installed and accessible via
+  `zzcollab` command)
+- Quarto (for rendering `.qmd` files to HTML)
+- Git (for version control)
+- Bash shell (macOS or Linux)
+
+**Optional but useful:**
+
 - GitHub CLI (`gh`) for automation
 - Docker (for full reproducibility)
-- Local Quarto preview capability
+- A local Quarto preview server
 
-## Initial Assessment: 5 Minutes
+**Background assumed:** Familiarity with markdown
+syntax, basic command-line operations, and the
+concept of symlinks. No prior experience with
+ZZCOLLAB is required; this post covers
+initialisation from scratch.
 
-Before starting, evaluate your source markdown:
+# What is the ZZCOLLAB Blog Workflow?
 
-**Ask Yourself**:
-1. How long is it? (200 lines? 600 lines?)
-2. Does it have code examples? (bash, R, Python?)
-3. Does it need images? (hero image, embedded diagrams?)
+The ZZCOLLAB blog workflow is a systematic process
+for converting standalone markdown documentation
+into a Quarto blog post that lives inside a
+reproducible research compendium. At its core, it
+solves a path conflict: Quarto expects blog posts
+at `posts/*/index.qmd`, while rrtools places
+authored content in `analysis/paper/`. The
+dual-symlink system bridges both conventions so
+that a single source file satisfies both tools.
+
+Think of it as a translation layer. Your markdown
+content goes into the rrtools-standard location.
+Symlinks at the project root make Quarto believe
+the file is where it expects. Image paths like
+`media/images/hero.jpg` resolve correctly from
+both locations because symlinks exist in both
+directions.
+
+The workflow itself takes roughly 40 minutes from
+start to finish: five minutes for assessment,
+three for initialisation, one for symlink setup,
+ten for content conversion, five for media assets,
+three for metadata, five for testing, and two for
+committing.
+
+# Getting Started
+
+## Step 1: Assess Your Source Document
+
+Before touching any tools, spend five minutes
+evaluating the markdown file you plan to convert.
+Ask yourself:
+
+1. How long is the document? A 200-line reference
+   differs from a 600-line tutorial.
+2. Does it contain code examples? If so, in which
+   languages?
+3. Does it need images? Hero images, diagrams,
+   screenshots?
 4. Is it a tutorial, reference guide, or how-to?
-5. What's the target audience?
+5. Who is the target audience?
 
-**Example: GitHub Archive Post**
 ```
+Example assessment:
 - Length: ~600 lines (substantial)
-- Code: Yes (bash script)
-- Images: Yes (hero + concept)
-- Type: How-to guide + reference
-- Audience: DevOps engineers
+- Code: Yes (bash scripts, R snippets)
+- Images: Yes (hero + concept diagram)
+- Type: How-to guide with reference sections
+- Audience: R developers using ZZCOLLAB
 - Estimate: 10 minutes to convert content
 ```
 
-## Make Key Decisions
-
-Before initializing the project, decide:
-
-| Decision | GitHub Archive | Your Post |
-|----------|------------------|-----------|
-| **Blog slug** | `github_archive` | `[kebab-case-name]` |
-| **ZZCOLLAB profile** | `ubuntu_standard_publishing` | Same (has Quarto) |
-| **Include analysis?** | No | Yes / No |
-| **Media assets** | 2 images | How many? |
-| **Categories** | DevOps, Git, etc | ? |
-
-# Part 2: Create the ZZCOLLAB Blog Project
-
-## Step 1: Create Directory
+## Step 2: Create the ZZCOLLAB Project
 
 ```bash
 cd ~/prj/qblog/posts
 mkdir my_blog_post && cd my_blog_post
-```
-
-Replace `my_blog_post` with your kebab-case slug (e.g., `github_archive`, `python_async`, `data_pipeline`).
-
-## Step 2: Initialize ZZCOLLAB
-
-```bash
 zzcollab -r ubuntu_standard_publishing
 ```
 
-This creates:
-- Standard project structure (analysis/, R/, tests/)
-- Dockerfile (reproducible environment)
-- renv.lock (R package versions)
-- Makefile (build automation)
-- .zzcollab/manifest.json (project metadata)
+This creates the standard project structure:
+`analysis/`, `R/`, `tests/`, a Dockerfile,
+`renv.lock`, a Makefile, and
+`.zzcollab/manifest.json`.
 
-**Expected output**: ~20 lines of checkmarks showing successful initialization
-
-## Step 3: Set Up Blog Structure
+## Step 3: Set Up the Dual-Symlink System
 
 ```bash
 ./modules/setup_symlinks.sh
 ```
 
-This creates the **dual-symlink system** that makes everything work:
+This creates symlinks at two levels:
 
-**At post root** (for Quarto):
-```
-index.qmd → analysis/paper/index.qmd
-figures/  → analysis/figures/
-media/    → analysis/media/
-data/     → analysis/data/
-```
+**At the project root** (for Quarto discovery):
 
-**In analysis/paper/** (for editing):
 ```
-figures/ → ../figures/
-media/   → ../media/
-data/    → ../data/
+index.qmd  -> analysis/paper/index.qmd
+figures/   -> analysis/figures/
+media/     -> analysis/media/
+data/      -> analysis/data/
 ```
 
-**Why symlinks?**
-- Quarto expects `posts/*/index.qmd` at root
-- ZZCOLLAB/rrtools puts content in `analysis/paper/`
-- Symlinks bridge both conventions
-- Image paths like `![](media/images/hero.jpg)` work automatically
+**Inside `analysis/paper/`** (for intuitive
+editing):
 
-## Step 4: Verify Structure
-
-```bash
-# Check root symlinks
-ls -la | grep "^l"
-
-# Should show all 4 symlinks ✓
-# index.qmd → analysis/paper/index.qmd
-# figures → analysis/figures
-# media → analysis/media
-# data → analysis/data
-
-# Check paper directory
-ls -la analysis/paper/
-
-# Should show:
-# figures → ../figures
-# media → ../media
-# data → ../data
-# index.qmd (actual file)
+```
+figures/ -> ../figures/
+media/   -> ../media/
+data/    -> ../data/
 ```
 
-# Part 3: Convert Markdown to Quarto Blog Post
+The dual-symlink design means that when you write
+`![](media/images/hero.jpg)` in your blog post,
+the path resolves correctly whether Quarto renders
+from the project root or you preview from
+`analysis/paper/`.
 
-## Create Proper YAML Frontmatter
+![An organised bookshelf with reference materials
+and a notebook](media/images/ambiance2.jpg
+){.img-fluid}
 
-Replace the template YAML with your blog post metadata:
+*Proper directory structure prevents the most
+common blog post failures.*
+
+# Converting Your Content
+
+## YAML Frontmatter
+
+Replace the template YAML with metadata specific
+to your post. The fields that matter most for blog
+listing display are `title`, `categories`,
+`description`, and `image`:
 
 ```yaml
 ---
 title: "Your Blog Post Title"
-subtitle: "Optional subtitle (2-3 words)"
+subtitle: "Clarifying subtitle"
 author: "Your Name"
 date: "2025-12-02"
-categories: [Category1, Category2, Category3]
-description: "2-3 sentence summary of the post"
-image: "media/images/hero-image.jpg"
+categories: [Category1, Category2]
+description: "2-3 sentence summary."
+image: "media/images/hero.jpg"
 document-type: "blog"
-draft: false
+draft: true
 execute:
   echo: true
   warning: false
   message: false
 format:
   html:
-    toc: true
-    toc-depth: 3
     code-fold: false
     code-tools: false
 ---
 ```
 
-**Key fields**:
-- `title`: 50-70 characters, searchable, descriptive
-- `categories`: 2-4 relevant categories for filtering
-- `description`: Appears in blog listing, capture value proposition
-- `draft: false`: Set to true to hide from publication
-- `date`: Publish date (or `last-modified` for auto-update)
-- `code-fold: false`: Show code by default (good for tutorials)
+Key points:
 
-## Structure Your Content
+- Keep titles under 70 characters and include
+  searchable keywords.
+- Use 2-4 categories drawn from your blog's
+  existing taxonomy.
+- The `description` field appears in blog listings;
+  lead with the value proposition.
+- Set `draft: true` during development.
 
-**Blog post structure** (proven effective):
+## Adapting Markdown to Quarto
 
-```
-1. Hero image + subtitle (1 paragraph)
-2. Introduction (2-3 paragraphs)
-   - What this post covers
-   - Why it matters
-   - What they'll learn
-3. Problem statement or background (2-3 sections)
-4. Solution/main content (multiple detailed sections)
-5. Code examples or implementation (complete, runnable)
-6. Usage instructions (step-by-step)
-7. Examples with actual output
-8. Best practices (tips and recommendations)
-9. Troubleshooting (common issues)
-10. Key takeaways (callout box summary)
-11. Further reading (links to related docs)
-```
+Most markdown syntax transfers directly. The main
+conversions to consider:
 
-## Adapt Your Markdown
-
-**Markdown → Quarto conversions**:
-
-```markdown
-# Simple heading → stays the same
-## Sub-heading → stays the same
-
-[Link text](url) → stays the same
-![Alt text](path) → stays the same
-- Bullet → stays the same
-
-> Blockquote → becomes :::callout-note
-```
-
-**Special: Convert blockquotes to Quarto callouts**
+- **Blockquotes** become Quarto callouts:
 
 ```qmd
 ::: {.callout-note}
 ## Summary
-
-Your key takeaway goes here
+Your key takeaway goes here.
 :::
 ```
 
-## Code Blocks Matter
+- **Code blocks** should specify a language for
+  syntax highlighting (`bash`, `r`, `python`).
+- **Images** use the `.img-fluid` class for
+  responsive display.
 
-Make code blocks production-ready:
+## Adding Media Assets
 
-```bash
-#!/bin/bash
-# Complete, runnable example
-# Comments explaining non-obvious parts
-set -e  # Exit on error
-
-# Actual working code
-your_command --with-options
-```
-
-**Best practices**:
-- Specify language (bash, r, python, sql, etc)
-- Make examples self-contained
-- Include comments for clarity
-- Test them before publishing
-
-# Part 4: Add Media Assets
-
-## Prepare Images
+Copy images into the media directory and document
+their sources:
 
 ```bash
-# Copy your hero image
-cp ~/path/to/hero-image.jpg analysis/media/images/my-post-hero.jpg
+cp ~/path/to/hero.jpg \
+  analysis/media/images/hero.jpg
 
-# Copy other images (concept art, diagrams, etc)
-cp ~/path/to/concept-image.png analysis/media/images/my-post-concept.png
-```
-
-## Document Image Sources
-
-Create a README in the images directory:
-
-```bash
 cat > analysis/media/images/README.md << 'EOF'
-# Image Sources and Attribution
+# Image Attribution
 
-## my-post-hero.jpg
-- Source: Unsplash / Pixabay / Pexels
-- Creator: [Creator Name if known]
-- License: [License type]
-- URL: [Link to original if available]
-
-## my-post-concept.png
-- Source: [Where it came from]
-- License: [CC0, CC-BY, etc]
-- Notes: [Any other relevant info]
+## hero.jpg
+- Source: Unsplash
+- Photographer: [Name]
+- Licence: Unsplash Licence
+- URL: [link]
 EOF
 ```
 
-**Why document sources?**
-- Respect creator attribution
-- Document licensing compliance
-- Make it easy to replace if needed
-- Good practice for professional blogs
-
-## Reference Images in Blog Post
+Reference images in your post with relative paths:
 
 ```qmd
-![Descriptive alt text](media/images/my-post-hero.jpg){.img-fluid}
+![Alt text](media/images/hero.jpg){.img-fluid}
 
-*Subtitle or caption for the image*
+*Caption with attribution.*
 ```
 
-The `{.img-fluid}` class makes images responsive on mobile.
+# Integration with the Parent Blog
 
-# Part 5: Update Project Metadata
+The parent Quarto blog configuration
+(`_quarto.yml`) already renders posts matching the
+pattern `posts/*/index.qmd`. Because the root-level
+symlink maps `index.qmd` to
+`analysis/paper/index.qmd`, the blog discovers
+your post automatically.
 
-## Customize README.md
+No changes to the parent blog configuration are
+required. When you render the entire site with
+`quarto render`, the new post appears in the
+listing.
 
-The ZZCOLLAB template creates a generic README. Personalize it:
+# Version Control
 
-```markdown
-# Your Blog Post Title
-
-> A blog post about [topic]
-
-## Quick Start
-
-To read this blog post:
+Commit your work with a descriptive message that
+documents the content, media assets, and
+reproducibility infrastructure:
 
 ```bash
-quarto render analysis/paper/index.qmd
-open index.html
+cd ~/prj/qblog/posts/my_blog_post
+git add .
+git status
+git commit -m "Add blog post: Your Post Title
+
+- analysis/paper/index.qmd: Main content
+- analysis/media/images/: Hero and diagrams
+- Dockerfile + renv.lock: Reproducible env"
 ```
 
-## Structure
+Git handles symlinks correctly; they are stored as
+text files containing the target path.
 
-- `analysis/paper/index.qmd` - Main blog post content
-- `analysis/media/images/` - Hero image and diagrams
-- `Dockerfile` - Reproducible environment
-- `renv.lock` - R package versions
-
-## To Extend This Post
-
-Add R analysis:
-```bash
-Rscript analysis/scripts/01_prepare_data.R
-Rscript analysis/scripts/02_generate_figures.R
-quarto render analysis/paper/index.qmd
-```
-```
-
-## Update DESCRIPTION File
-
-```r
-Package: myblogpost
-Title: Your Blog Post Title Here
-Description: Brief description of what the post covers
-Version: 1.0.0
-Authors@R: person("Your Name", role = c("aut", "cre"))
-```
-
-# Part 6: Test and Validate
+# Testing and Validation
 
 ## Quick Validation
 
 ```bash
-# Verify symlinks are correct
 ls -la index.qmd
-# Should show: index.qmd -> analysis/paper/index.qmd ✓
-
-# Check YAML syntax (proper indentation, no tabs)
 head -25 analysis/paper/index.qmd
-
-# Verify image paths are relative
 grep "images/" analysis/paper/index.qmd
-# Should show: media/images/filename.jpg (not absolute path)
 ```
 
-## Render Locally (If Quarto Installed)
+## Local Render
 
 ```bash
 cd ~/prj/qblog/posts/my_blog_post
 quarto render analysis/paper/index.qmd
-
-# Preview in browser
 open index.html
 ```
 
-**Common issues**:
+Common issues and fixes:
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `index.qmd not found` | Symlink broken | Check: `ls -la index.qmd` |
-| `Image not found` | Wrong path | Use relative: `media/images/file.jpg` |
-| `YAML parse error` | Indentation (tabs?) | Use spaces only |
-| Code not highlighted | Wrong language | Specify: ` ```bash ` not ` ``` ` |
+| `index.qmd not found` | Broken symlink | `ls -la index.qmd` |
+| Image not found | Wrong path | Use `media/images/file.jpg` |
+| YAML parse error | Tabs in YAML | Use spaces only |
+| No highlighting | Missing language | Specify ` ```bash ` |
 
-# Part 7: Integration with Parent Blog
+## Things to Watch Out For
 
-Your parent Quarto blog's `_quarto.yml` should already have:
+1. **Symlinks break after cloning.** If someone
+   clones your repository and the symlinks do not
+   recreate correctly, they must run
+   `setup_symlinks.sh` again or recreate them
+   manually.
+2. **Tabs in YAML cause silent failures.** Quarto
+   YAML requires spaces for indentation. A single
+   tab character produces a parse error that does
+   not always point to the offending line.
+3. **Absolute image paths break portability.** Always
+   use relative paths (`media/images/hero.jpg`),
+   never absolute paths. Absolute paths work on
+   your machine and nowhere else.
+4. **The `draft` field defaults to `false` when
+   omitted.** If you forget to set `draft: true`,
+   your unfinished post appears on the public site
+   after the next render.
+5. **Large images slow rendering and page load.**
+   Keep images under 500 KB each. Use JPEG for
+   photographs and PNG for diagrams with sharp
+   edges.
 
-```yaml
-project:
-  type: website
-  render:
-    - "posts/*/index.qmd"
-```
+![A notebook with a completed checklist beside a
+cup of coffee](media/images/ambiance3.jpg
+){.img-fluid}
 
-**Great news**: Because we used symlinks, Quarto automatically finds your post!
+*A pre-publication checklist prevents common
+deployment failures.*
 
-**No changes needed to parent blog configuration.**
+## Lessons Learnt
 
-When you render the parent blog:
+### Conceptual Understanding
+
+- The dual-symlink system is the single most
+  important architectural decision in the workflow;
+  it reconciles two competing directory conventions
+  without requiring changes to either tool.
+- Blog posts are more discoverable than standalone
+  markdown files; the effort of conversion pays off
+  in audience reach.
+- Structured YAML metadata enables Quarto's listing
+  features (search, category filtering, date
+  sorting) without custom JavaScript.
+- The rrtools research compendium layout provides a
+  natural separation between authored content,
+  analysis code, and media assets.
+
+### Technical Skills
+
+- Setting up symlinks with `ln -s` and verifying
+  them with `ls -la` became second nature after
+  the first conversion.
+- Writing Quarto callouts
+  (`::: {.callout-note} ... :::`) replaced
+  blockquotes for emphasis and improved visual
+  hierarchy.
+- The `.img-fluid` class in Bootstrap ensures
+  images scale correctly on mobile without any
+  custom CSS.
+- Using `quarto render` for local preview before
+  committing caught broken paths that would
+  otherwise reach the public site.
+
+### Gotchas and Pitfalls
+
+- I initially forgot to document image sources in
+  `analysis/media/images/README.md` and had to
+  reconstruct attribution after the fact.
+- A missing `.img-fluid` class caused one hero
+  image to overflow its container on mobile
+  devices.
+- I once committed a post with `draft: false` by
+  accident and discovered it live on the site
+  before correcting the metadata.
+- Quarto's error messages for broken image paths
+  are sometimes vague; `grep` for all image
+  references before rendering saves debugging time.
+
+## Limitations
+
+- This workflow assumes a Unix-like environment
+  (macOS or Linux) for symlink support. Windows
+  users may need WSL or alternative approaches.
+- The 40-minute estimate applies to straightforward
+  documentation with minimal code and few images.
+  Complex tutorials with interactive elements take
+  longer.
+- The dual-symlink system adds conceptual
+  complexity that may confuse contributors
+  unfamiliar with the convention.
+- ZZCOLLAB must be installed and functional before
+  starting. Troubleshooting ZZCOLLAB itself is
+  outside the scope of this workflow.
+- The workflow does not cover adding R analysis
+  pipelines to posts that are purely narrative;
+  extending a documentation post with data analysis
+  requires additional steps.
+- Local rendering requires Quarto installed on the
+  author's machine. Docker-based rendering is
+  possible but adds setup time.
+
+## Opportunities for Improvement
+
+1. Create a shell script that automates the entire
+   workflow: directory creation, ZZCOLLAB
+   initialisation, symlink setup, and YAML
+   template population from command-line arguments.
+2. Build a validation script that checks all image
+   paths, verifies symlink integrity, and confirms
+   YAML field completeness before rendering.
+3. Add a `make convert` target to the Makefile that
+   accepts a source markdown path and performs the
+   conversion automatically.
+4. Develop a Quarto extension that validates
+   `document-type` metadata and warns when required
+   sections are missing.
+5. Create a companion post covering the reverse
+   workflow: extracting documentation from an
+   existing blog post into a standalone reference.
+6. Implement automated image optimisation (resizing,
+   compression) as part of the media asset pipeline.
+
+# Wrapping Up
+
+Converting standalone markdown documentation into
+a ZZCOLLAB blog post is a systematic, repeatable
+process that takes roughly 40 minutes once you
+understand the workflow. The dual-symlink system
+bridges the gap between Quarto's directory
+expectations and the rrtools research compendium
+layout, and proper YAML metadata ensures your
+content is discoverable through search and category
+filtering.
+
+What I learnt most from developing this workflow is
+that the barrier to publishing is not the
+conversion itself but the lack of a structured
+process. Once the steps are documented and the
+checklist is in place, each subsequent conversion
+is faster and less error-prone.
+
+If you have documentation sitting in project
+directories that could benefit a broader audience,
+I encourage you to try this workflow. The initial
+investment in understanding the symlink system pays
+dividends every time you convert another document.
+
+Main takeaways:
+
+- The dual-symlink system is the architectural
+  foundation; understand it first.
+- YAML metadata drives discoverability; invest time
+  in titles, descriptions, and categories.
+- A pre-publication checklist prevents the most
+  common failures.
+- The entire process takes about 40 minutes from
+  assessment to committed post.
+
+# See Also
+
+**Related posts:**
+
+- [ZZCOLLAB Blog Setup Guide](
+  ../39-templatepost/templatepost/docs/
+  ZZCOLLAB_BLOG_SETUP.md) --
+  Comprehensive setup documentation
+- [Blog Post Template](
+  ../39-templatepost/templatepost/analysis/report/
+  index.qmd) --
+  The template this workflow produces
+
+**Key resources:**
+
+- [ZZCOLLAB Framework](
+  https://github.com/rgt47/zzcollab) --
+  Project initialisation and management
+- [Quarto Blog Guide](
+  https://quarto.org/docs/websites/website-blog.html
+  ) -- Official Quarto blog documentation
+- [rrtools Research Compendium](
+  https://github.com/benmarwick/rrtools) --
+  The convention ZZCOLLAB follows
+- [Quarto YAML Reference](
+  https://quarto.org/docs/reference/formats/html.html
+  ) -- Complete YAML options
+
+# Reproducibility
+
+This post is primarily narrative and does not
+involve a computational analysis pipeline. The
+ZZCOLLAB project structure provides the
+reproducibility infrastructure:
+
 ```bash
-cd ~/prj/qblog
-quarto render
+cd ~/prj/qblog/posts/06-markdowntoblog/
+cd markdowntoblog
+quarto render analysis/report/index.qmd
 ```
 
-It discovers your post via the `posts/my_blog_post/index.qmd` symlink and automatically includes it in the site.
+**Project files:**
 
-# Part 8: Version Control
-
-## Commit Your Work
-
-```bash
-cd ~/prj/qblog/posts/my_blog_post
-
-# Stage all changes
-git add .
-
-# Check what you're committing
-git status
-
-# Commit with descriptive message
-git commit -m "Add blog post: Your Post Title
-
-- analysis/paper/index.qmd: Main content
-- analysis/media/images/: Hero and supporting images
-- README.md: Post documentation
-- Docker/renv: Reproducible environment
-
-Topics covered:
-- [Main topic 1]
-- [Main topic 2]
-- [Main topic 3]"
 ```
-
-## Push to Remote
-
-```bash
-git push origin main
-```
-
-**Git handles symlinks automatically** - they're stored as text files containing the target path. When someone clones your blog, symlinks are recreated correctly.
-
-# Part 9: Complete Workflow Summary
-
-## Timeline and Checklist
-
-| Phase | Time | Task |
-|-------|------|------|
-| Assessment | 5 min | Read markdown, plan structure |
-| Initialize | 3 min | Create directory, run `zzcollab` |
-| Setup | 1 min | Run `setup_symlinks.sh` |
-| Convert | 10 min | Adapt markdown → Quarto |
-| Media | 5 min | Add images, document sources |
-| Metadata | 3 min | Update README, DESCRIPTION |
-| Test | 5 min | Verify structure, validate |
-| Commit | 2 min | Git add/commit/push |
-| **Total** | **~40 min** | **Blog post ready** |
-
-## Pre-Publication Checklist
-
-**Content**:
-- [ ] Blog post written (analysis/paper/index.qmd)
-- [ ] All sections complete
-- [ ] Code examples tested
-- [ ] Links verified (no 404s)
-- [ ] Grammar/spelling checked
-
-**Metadata**:
-- [ ] YAML frontmatter correct
-- [ ] Title descriptive (50-70 chars)
-- [ ] Categories relevant
-- [ ] Description captures value
-- [ ] `draft: false` (to publish)
-
-**Media**:
-- [ ] Hero image added
-- [ ] Images documented in README.md
-- [ ] All image paths relative (`media/images/...`)
-- [ ] Image alt text present
-- [ ] File sizes reasonable (< 500KB each)
-
-**Structure**:
-- [ ] Symlinks verified (4 at root)
-- [ ] README.md customized
-- [ ] DESCRIPTION updated
-- [ ] `.gitignore` appropriate
-
-**Testing**:
-- [ ] Local render successful (if Quarto installed)
-- [ ] All images display
-- [ ] All links work
-- [ ] Code syntax highlighted
-- [ ] TOC generates correctly
-
-# Part 10: Extending Your Blog Post
-
-Once published, you can enhance your post:
-
-## Add R Analysis
-
-Create analysis scripts:
-
-```bash
-# analysis/scripts/01_prepare_data.R
-library(tidyverse)
-# ... your analysis code ...
-write_csv(results, "analysis/data/derived_data/results.csv")
-```
-
-Update Makefile:
-```makefile
-post-analysis:
-	Rscript analysis/scripts/01_prepare_data.R
-	Rscript analysis/scripts/02_generate_figures.R
-
-post-render: post-analysis
-	quarto render index.qmd
-```
-
-## Add Interactive Content
-
-Quarto supports multiple languages:
-
-```{ojs}
-// Observable JS for interactive visualizations
-Plot.plot({
-  // ... your D3/Observable code ...
-})
+markdowntoblog/
+  analysis/report/index.qmd  -- This post
+  analysis/media/images/      -- Hero, ambiance
+  Dockerfile                  -- Environment
+  renv.lock                   -- R packages
+  Makefile                    -- Build automation
 ```
 
 ```{r}
-# R code with Shiny for interactive elements
-library(shiny)
-library(plotly)
+#| echo: false
+#| eval: false
+sessionInfo()
 ```
-
-## Version Updates
-
-When you update the post:
-
-```bash
-# Edit content
-vim analysis/paper/index.qmd
-
-# Update date (if using last-modified)
-# Or change manually: date: "2025-12-15"
-
-# Render and test
-quarto render analysis/paper/index.qmd
-
-# Commit update
-git add .
-git commit -m "Update post: [what changed]"
-git push
-```
-
-# Part 11: Troubleshooting Guide
-
-## Symlink Issues
-
-**Symlink appears broken after cloning**:
-```bash
-# Git may not have recreated symlinks correctly
-# Recreate manually:
-cd ~/prj/qblog/posts/my_blog_post
-rm index.qmd media figures data
-ln -s analysis/paper/index.qmd index.qmd
-ln -s analysis/media media
-ln -s analysis/figures figures
-ln -s analysis/data data
-```
-
-## YAML Errors
-
-**"YAML parsing error"**:
-```bash
-# Check for tabs (they're not allowed)
-cat -A analysis/paper/index.qmd | head -30
-# Tabs show as ^I, spaces don't
-
-# Fix by using your editor in spaces-only mode
-vim analysis/paper/index.qmd
-:set expandtab
-```
-
-## Quarto Issues
-
-**"Quarto executable not found"**:
-```bash
-# Install Quarto
-# macOS:
-brew install quarto
-
-# Or download from: https://quarto.org/docs/get-started/
-```
-
-**Code blocks not syntax-highlighted**:
-```
-# Wrong:
-```shell
-code
-```
-
-# Right:
-```bash
-code
-```
-```
-
-Quarto recognizes: bash, sh, r, python, sql, javascript, html, css, java, etc.
-
-![An organised workspace with notebooks and a laptop on a
-clean desk](media/images/ambiance3.jpg){.img-fluid}
-
-*A well-organised workspace mirrors the structure a good blog
-post brings to technical documentation.*
-
-# Part 12: Best Practices
-
-## Writing for Web Readers
-
-- **Skim-friendly**: Use lots of headings and short paragraphs
-- **Scannable**: Bullet points over long paragraphs
-- **Linked**: Include links to related docs/resources
-- **Examples**: Show actual output, not just descriptions
-- **Progressive**: Start simple, build complexity
-
-## Metadata Strategy
-
-**Title**:
-- Include searchable keywords
-- Be specific (avoid "A Guide To Everything")
-- Keep under 70 characters
-
-**Categories**:
-- Consistent across your blog
-- 2-4 per post
-- Enables filtering
-
-**Description**:
-- 2-3 sentences maximum
-- Appears in blog listing
-- Lead with value proposition
-
-## Code Example Quality
-
-**Test code before publishing**:
-```bash
-# Run the example yourself
-bash example-script.sh
-
-# Verify output matches what you document
-# Fix any issues before publishing
-```
-
-**Complete examples**:
-- Include necessary imports
-- Show all required setup
-- Provide full, working code
-- Don't make readers guess
-
-# Part 13: Real-World Example
-
-This blog post itself is a working example! Let me show you:
-
-## Structure Used Here
-
-```
-markdown_to_blog/
-├── index.qmd (symlink) → analysis/paper/index.qmd
-├── media/ (symlink) → analysis/media/
-├── analysis/
-│   ├── paper/
-│   │   └── index.qmd (THIS FILE, ~3000 words)
-│   └── media/
-│       └── images/
-│           ├── README.md (document image sources)
-│           └── [hero and concept images]
-```
-
-## What Was Converted
-
-Source: `markdown_to_blogpost.md` (process documentation, ~1300 lines)
-
-Converted to: This blog post (teaching audience how to do it)
-
-## Key Decisions Made
-
-| Decision | Outcome |
-|----------|---------|
-| **Slug** | `markdown_to_blog` (kebab-case) |
-| **Profile** | `ubuntu_standard_publishing` |
-| **Content** | Educational (teaching, not documenting) |
-| **Structure** | Progressive (overview → details → checklist) |
-| **Examples** | Reference actual GitHub archive post |
-
-# Key Takeaways
-
-::: {.callout-note}
-## Summary: From Markdown to Published Blog Post
-
-1. **Dual-symlink system** solves the ZZCOLLAB + Quarto compatibility puzzle
-2. **ZZCOLLAB initialization** gives you reproducibility from the start
-3. **Minimal conversion effort** - mostly structural (YAML, headings)
-4. **40 minutes total** - from markdown to committed, ready to publish
-5. **No parent blog changes** - symlinks make integration seamless
-6. **Extensible foundation** - can add analysis, media, interactivity later
-
-**The workflow is repeatable**: Once you've done it once, converting additional posts becomes faster and more automatic.
-
-**Most importantly**: Your valuable documentation gets discovered, reaches your audience, and contributes to your blog's growth.
-:::
-
-# Further Reading
-
-- [ZZCOLLAB Framework](https://github.com/rgt47/zzcollab) - Project initialization and management
-- [Quarto Blog Guide](https://quarto.org/docs/websites/website-blog.html) - Detailed Quarto blog documentation
-- [rrtools Research Compendium](https://github.com/benmarwick/rrtools) - The convention we follow
-- [Quarto YAML Reference](https://quarto.org/docs/reference/formats/html.html) - Complete YAML options
-- [Git Symlinks](https://git-scm.com/docs/git-ls-files) - How Git handles symlinks
-- [Markdown to Quarto](https://quarto.org/docs/tools/jupyter-notebooks.html) - Quarto format specifics
 
 # Let's Connect
 
-- **GitHub**: [rgt47](https://github.com/rgt47)
-- **Twitter/X**: [@rgt47](https://twitter.com/rgt47)
-- **LinkedIn**: [Ronald Glenn Thomas](https://linkedin.com/in/rgthomaslab)
-- **Email**: [Contact through website](https://rgtlab.org/contact)
+- **GitHub:**
+  [rgt47](https://github.com/rgt47)
+- **Twitter/X:**
+  [@rgt47](https://twitter.com/rgt47)
+- **LinkedIn:**
+  [Ronald Glenn Thomas](
+  https://linkedin.com/in/rgthomaslab)
+- **Email:**
+  [rgtlab.org/contact](https://rgtlab.org/contact)
 
-I would enjoy hearing from you if you:
+I would enjoy hearing from you if:
 
-- Spot an error or have a correction
-- Have a better approach to any of these workflows
-- Want to share your own documentation-to-blog experience
-- Have questions about ZZCOLLAB or Quarto
-- Just want to connect and talk about reproducible research
+- You spot an error or a better approach to any of
+  the code in this post.
+- You have suggestions for topics you would like to
+  see covered.
+- You want to discuss R programming, data science,
+  or reproducible research.
+- You have questions about anything in this
+  tutorial.
+- You just want to say hello and connect.
