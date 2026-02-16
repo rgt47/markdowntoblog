@@ -99,7 +99,7 @@ spot errors or have better approaches, please let
 me know.
 
 ![A clean desk with organised notes and a laptop
-displaying a code editor](media/images/ambiance1.jpg
+](media/images/quarto-logo.png
 ){.img-fluid}
 
 *A structured workflow turns documentation into
