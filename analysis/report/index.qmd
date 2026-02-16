@@ -6,7 +6,7 @@ subtitle: >
   reproducible blog posts with Quarto
 author: "Ronald G. Thomas"
 date: "2025-12-02"
-categories:
+categories: [quarto, zzcollab, workflow, reproducibility]
   [Quarto, ZZCOLLAB, Blog Development, Workflow]
 description: >
   I did not really know how to convert standalone
@@ -251,7 +251,7 @@ title: "Your Blog Post Title"
 subtitle: "Clarifying subtitle"
 author: "Your Name"
 date: "2025-12-02"
-categories: [Category1, Category2]
+categories: [quarto, zzcollab, workflow, reproducibility]
 description: "2-3 sentence summary."
 image: "media/images/hero.jpg"
 document-type: "blog"
