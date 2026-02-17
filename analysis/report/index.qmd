@@ -7,7 +7,6 @@ subtitle: >
 author: "Ronald G. Thomas"
 date: "2025-12-02"
 categories: [quarto, zzcollab, workflow, reproducibility]
-  [Quarto, ZZCOLLAB, Blog Development, Workflow]
 description: >
   I did not really know how to convert standalone
   markdown documentation into a professional blog
@@ -98,9 +97,7 @@ I am documenting my learning process here. If you
 spot errors or have better approaches, please let
 me know.
 
-![A clean desk with organised notes and a laptop
-](media/images/quarto-logo.png
-){.img-fluid}
+![](media/images/quarto-logo.png){.img-fluid width=30% fig-align="center"}
 
 *A structured workflow turns documentation into
 discoverable content.*
@@ -625,4 +622,3 @@ I would enjoy hearing from you if:
   or reproducible research.
 - You have questions about anything in this
   tutorial.
-- You just want to say hello and connect.
