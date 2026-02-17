@@ -8,10 +8,9 @@ author: "Ronald G. Thomas"
 date: "2025-12-02"
 categories: [quarto, zzcollab, workflow, reproducibility]
 description: >
-  I did not really know how to convert standalone
-  markdown documentation into a professional blog
-  post until I developed a systematic workflow using
-  ZZCOLLAB symlinks and Quarto metadata.
+  A systematic workflow for converting standalone
+  markdown documentation into professional blog posts
+  using ZZCOLLAB symlinks and Quarto metadata.
 image: "media/images/hero.jpg"
 document-type: "blog"
 draft: true
@@ -35,49 +34,47 @@ reproducible, discoverable blog posts.*
 
 # Introduction
 
-I did not really know how to convert standalone
-markdown documentation into a professional blog
-post until I sat down with a well-written
-technical reference and tried to publish it
-through my Quarto site. The document was clear,
-had working code examples, and covered its topic
-thoroughly. Yet it sat as a flat file on my disk,
-invisible to anyone who might benefit from it.
+Converting standalone markdown documentation into a
+professional blog post presents a common challenge:
+a well-written technical reference with working code
+examples and thorough coverage sits as a flat file
+on disk, invisible to anyone who might benefit from
+it.
 
-The gap between a markdown file and a published
-blog post turned out to be narrower than I
-expected, but only if you follow a systematic
-workflow. The ZZCOLLAB framework provides the
-scaffolding: symlinks bridge Quarto's expectations
-with the rrtools research compendium layout, and
-a reproducible Docker environment ensures that
-readers can rebuild the post from source.
+The gap between a markdown file and a published blog
+post turns out to be narrower than expected, but
+only if a systematic workflow is followed. The
+ZZCOLLAB framework provides the scaffolding:
+symlinks bridge Quarto's expectations with the
+rrtools research compendium layout, and a
+reproducible Docker environment ensures that readers
+can rebuild the post from source.
 
 This post documents that conversion workflow from
-start to finish, including the decisions you need
-to make, the directory structure you need to
-create, and the verification steps that prevent
-broken links and missing images from reaching your
-audience.
+start to finish, including the decisions required,
+the directory structure to create, and the
+verification steps that prevent broken links and
+missing images from reaching the audience.
 
 ## Motivations
 
-- I had several hundred-line markdown documents
-  sitting in project directories that no one
-  outside the project would ever find.
+The following considerations motivated this workflow:
+
+- Hundred-line markdown documents sitting in project
+  directories remain invisible to anyone outside the
+  project.
 - Search engines cannot index a markdown file on a
   local disk; a published blog post reaches a
   broader audience.
-- I wanted a repeatable process so that converting
-  future documentation would take minutes rather
-  than hours.
-- The ZZCOLLAB dual-symlink system was already
-  solving the Quarto-versus-rrtools path conflict,
-  and I wanted to document how to use it for
-  documentation conversion specifically.
-- I needed a pre-publication checklist to prevent
-  the embarrassment of publishing posts with
-  broken image paths and missing YAML fields.
+- A repeatable process allows converting future
+  documentation in minutes rather than hours.
+- The ZZCOLLAB dual-symlink system already solves
+  the Quarto-versus-rrtools path conflict;
+  documenting its use for documentation conversion
+  specifically fills a gap.
+- A pre-publication checklist prevents publishing
+  posts with broken image paths and missing YAML
+  fields.
 
 ## Objectives
 
@@ -93,9 +90,8 @@ audience.
    content, metadata, media, structure, and
    testing.
 
-I am documenting my learning process here. If you
-spot errors or have better approaches, please let
-me know.
+Errors and better approaches are welcome; see the
+Feedback section at the end.
 
 ![](media/images/quarto-logo.png){.img-fluid width=30% fig-align="center"}
 
@@ -449,17 +445,16 @@ deployment failures.*
 
 ### Gotchas and Pitfalls
 
-- I initially forgot to document image sources in
-  `analysis/media/images/README.md` and had to
-  reconstruct attribution after the fact.
-- A missing `.img-fluid` class caused one hero
-  image to overflow its container on mobile
-  devices.
-- I once committed a post with `draft: false` by
-  accident and discovered it live on the site
-  before correcting the metadata.
+- Forgetting to document image sources in
+  `analysis/media/images/README.md` requires
+  reconstructing attribution after the fact.
+- A missing `.img-fluid` class causes hero images
+  to overflow their container on mobile devices.
+- Committing a post with `draft: false` by accident
+  results in the post appearing live on the site
+  before the metadata is corrected.
 - Quarto's error messages for broken image paths
-  are sometimes vague; `grep` for all image
+  are sometimes vague; using `grep` for all image
   references before rendering saves debugging time.
 
 ## Limitations
@@ -518,18 +513,18 @@ layout, and proper YAML metadata ensures your
 content is discoverable through search and category
 filtering.
 
-What I learnt most from developing this workflow is
+The key insight from developing this workflow is
 that the barrier to publishing is not the
 conversion itself but the lack of a structured
 process. Once the steps are documented and the
 checklist is in place, each subsequent conversion
 is faster and less error-prone.
 
-If you have documentation sitting in project
+For those with documentation sitting in project
 directories that could benefit a broader audience,
-I encourage you to try this workflow. The initial
+this workflow merits consideration. The initial
 investment in understanding the symlink system pays
-dividends every time you convert another document.
+dividends every time another document is converted.
 
 Main takeaways:
 
@@ -548,27 +543,27 @@ Main takeaways:
 
 - [ZZCOLLAB Blog Setup Guide](
   ../39-templatepost/templatepost/docs/
-  ZZCOLLAB_BLOG_SETUP.md) --
+  ZZCOLLAB_BLOG_SETUP.md):
   Comprehensive setup documentation
 - [Blog Post Template](
   ../39-templatepost/templatepost/analysis/report/
-  index.qmd) --
+  index.qmd):
   The template this workflow produces
 
 **Key resources:**
 
 - [ZZCOLLAB Framework](
-  https://github.com/rgt47/zzcollab) --
+  https://github.com/mygit/zzcollab):
   Project initialisation and management
 - [Quarto Blog Guide](
-  https://quarto.org/docs/websites/website-blog.html
-  ) -- Official Quarto blog documentation
+  https://quarto.org/docs/websites/website-blog.html):
+  Official Quarto blog documentation
 - [rrtools Research Compendium](
-  https://github.com/benmarwick/rrtools) --
+  https://github.com/benmarwick/rrtools):
   The convention ZZCOLLAB follows
 - [Quarto YAML Reference](
-  https://quarto.org/docs/reference/formats/html.html
-  ) -- Complete YAML options
+  https://quarto.org/docs/reference/formats/html.html):
+  Complete YAML options
 
 # Reproducibility
 
@@ -587,11 +582,11 @@ quarto render analysis/report/index.qmd
 
 ```
 markdowntoblog/
-  analysis/report/index.qmd  -- This post
-  analysis/media/images/      -- Hero, ambiance
-  Dockerfile                  -- Environment
-  renv.lock                   -- R packages
-  Makefile                    -- Build automation
+  analysis/report/index.qmd   # This post
+  analysis/media/images/      # Hero, ambiance
+  Dockerfile                  # Environment
+  renv.lock                   # R packages
+  Makefile                    # Build automation
 ```
 
 ```{r}
@@ -600,25 +595,15 @@ markdowntoblog/
 sessionInfo()
 ```
 
-# Let's Connect
+# Feedback
 
-- **GitHub:**
-  [rgt47](https://github.com/rgt47)
-- **Twitter/X:**
-  [@rgt47](https://twitter.com/rgt47)
-- **LinkedIn:**
-  [Ronald Glenn Thomas](
-  https://linkedin.com/in/rgthomaslab)
-- **Email:**
-  [rgtlab.org/contact](https://rgtlab.org/contact)
+Feedback is welcome for:
 
-I would enjoy hearing from you if:
-
-- You spot an error or a better approach to any of
-  the code in this post.
-- You have suggestions for topics you would like to
-  see covered.
-- You want to discuss R programming, data science,
-  or reproducible research.
-- You have questions about anything in this
-  tutorial.
+- Errors or better approaches to any of the steps
+  in this workflow
+- Suggestions for topics to cover in future posts
+- Discussion of documentation workflows,
+  reproducibility, or Quarto publishing
+- Questions about ZZCOLLAB or the symlink system
+- General discussion of technical writing for
+  data science
