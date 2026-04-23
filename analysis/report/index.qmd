@@ -13,7 +13,7 @@ description: >
   using ZZCOLLAB symlinks and Quarto metadata.
 image: "media/images/hero.jpg"
 document-type: "blog"
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
@@ -248,7 +248,7 @@ categories: [quarto, zzcollab, workflow, reproducibility]
 description: "2-3 sentence summary."
 image: "media/images/hero.jpg"
 document-type: "blog"
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
@@ -268,7 +268,7 @@ Key points:
   existing taxonomy.
 - The `description` field appears in blog listings;
   lead with the value proposition.
-- Set `draft: true` during development.
+- Set `draft: false` during development.
 
 ## Adapting Markdown to Quarto
 
@@ -394,7 +394,7 @@ Common issues and fixes:
    never absolute paths. Absolute paths work on
    your machine and nowhere else.
 4. **The `draft` field defaults to `false` when
-   omitted.** If you forget to set `draft: true`,
+   omitted.** If you forget to set `draft: false`,
    your unfinished post appears on the public site
    after the next render.
 5. **Large images slow rendering and page load.**
