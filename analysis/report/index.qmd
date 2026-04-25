@@ -4,7 +4,7 @@ title: "From Markdown to Blog Post: A ZZCOLLAB
 subtitle: >
   Converting standalone documentation into
   reproducible blog posts with Quarto
-author: "Ronald G. Thomas"
+author: "Ronald 'Ryy' G. Thomas"
 date: "2025-12-02"
 categories: [quarto, zzcollab, workflow, reproducibility]
 description: >
