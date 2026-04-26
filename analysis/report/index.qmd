@@ -6,7 +6,7 @@ subtitle: >
   reproducible blog posts with Quarto
 author: "Ronald 'Ryy' G. Thomas"
 date: "2025-12-02"
-categories: [quarto, zzcollab, workflow, reproducibility]
+categories: [quarto, zzcollab, reproducibility]
 description: >
   A systematic workflow for converting standalone
   markdown documentation into professional blog posts
@@ -244,7 +244,7 @@ title: "Your Blog Post Title"
 subtitle: "Clarifying subtitle"
 author: "Your Name"
 date: "2025-12-02"
-categories: [quarto, zzcollab, workflow, reproducibility]
+categories: [quarto, zzcollab, reproducibility]
 description: "2-3 sentence summary."
 image: "media/images/hero.jpg"
 document-type: "blog"
