@@ -56,6 +56,18 @@ the directory structure to create, and the
 verification steps that prevent broken links and
 missing images from reaching the audience.
 
+More formally, this post documents the Document layer of the
+Workflow Construct described in
+[post 52](/posts/52-workflow-construct/), specifically the
+operation that promotes a standalone Markdown document into
+a published blog post within the ZZCOLLAB compendium. The
+broader compendium-tier pattern is documented in
+[post 29](/posts/29-setupquarto/); this post is the
+conversion-specific complement, addressing the
+directory-structure, symlink, and YAML metadata work
+required to take an existing Markdown file and surface it
+as a published artefact.
+
 ## Motivations
 
 The following considerations motivated this workflow:
