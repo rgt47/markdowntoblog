@@ -553,13 +553,9 @@ Main takeaways:
 
 **Related posts:**
 
-- [ZZCOLLAB Blog Setup Guide](
-  ../39-templatepost/templatepost/docs/
-  ZZCOLLAB_BLOG_SETUP.md):
+- [ZZCOLLAB Blog Setup Guide](/posts/39-templatepost/templatepost/docs/ZZCOLLAB_BLOG_SETUP.md):
   Comprehensive setup documentation
-- [Blog Post Template](
-  ../39-templatepost/templatepost/analysis/report/
-  index.qmd):
+- [Blog Post Template](/posts/39-templatepost/templatepost/analysis/report/index.qmd):
   The template this workflow produces
 
 **Key resources:**
