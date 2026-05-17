@@ -1,9 +1,6 @@
 ---
 title: "From Markdown to Blog Post: A ZZCOLLAB
   Conversion Workflow"
-subtitle: >
-  Converting standalone documentation into
-  reproducible blog posts with Quarto
 author: "Ronald 'Ryy' G. Thomas"
 date: "2025-12-02"
 categories: [quarto, zzcollab, reproducibility]
@@ -27,7 +24,7 @@ format:
 ![A workspace with documentation ready for
 conversion into a structured blog
 post](media/images/hero.jpg){.img-fluid
-width=80%}
+width=80% fig-align="center"}
 
 *Transforming standalone documentation into
 reproducible, discoverable blog posts.*
