@@ -47,11 +47,11 @@ rrtools research compendium layout, and a
 reproducible Docker environment ensures that readers
 can rebuild the post from source.
 
-This post documents that conversion workflow from
-start to finish, including the decisions required,
-the directory structure to create, and the
-verification steps that prevent broken links and
-missing images from reaching the audience.
+We document that conversion workflow from start to
+finish, including the decisions required, the
+directory structure to create, and the verification
+steps that prevent broken links and missing images
+from reaching the audience.
 
 More formally, this post documents the Document layer of the
 Workflow Construct described in
@@ -109,8 +109,7 @@ discoverable content.*
 
 # Prerequisites and Setup
 
-You will need the following tools installed before
-starting:
+The following tools are required before starting:
 
 **Required:**
 
@@ -144,13 +143,12 @@ authored content in `analysis/paper/`. The
 dual-symlink system bridges both conventions so
 that a single source file satisfies both tools.
 
-Think of it as a translation layer. Your markdown
-content goes into the rrtools-standard location.
-Symlinks at the project root make Quarto believe
-the file is where it expects. Image paths like
-`media/images/hero.jpg` resolve correctly from
-both locations because symlinks exist in both
-directions.
+Think of it as a translation layer: markdown content
+goes into the rrtools-standard location, and symlinks
+at the project root make Quarto believe the file is
+where it expects. Image paths like
+`media/images/hero.jpg` resolve correctly from both
+locations because symlinks exist in both directions.
 
 The workflow itself takes roughly 40 minutes from
 start to finish: five minutes for assessment,
@@ -161,11 +159,11 @@ committing.
 
 # Getting Started
 
-## Step 1: Assess Your Source Document
+## Step 1: Assess the Source Document
 
 Before touching any tools, spend five minutes
-evaluating the markdown file you plan to convert.
-Ask yourself:
+evaluating the markdown file to be converted.
+The following questions are worth considering:
 
 1. How long is the document? A 200-line reference
    differs from a 600-line tutorial.
@@ -225,10 +223,10 @@ media/   -> ../media/
 data/    -> ../data/
 ```
 
-The dual-symlink design means that when you write
-`![](media/images/hero.jpg)` in your blog post,
-the path resolves correctly whether Quarto renders
-from the project root or you preview from
+The dual-symlink design means that writing
+`![](media/images/hero.jpg)` in a blog post will
+resolve correctly whether Quarto renders from the
+project root or the author previews from
 `analysis/paper/`.
 
 ![An organised bookshelf with reference materials
@@ -400,8 +398,8 @@ Common issues and fixes:
    not always point to the offending line.
 3. **Absolute image paths break portability.** Always
    use relative paths (`media/images/hero.jpg`),
-   never absolute paths. Absolute paths work on
-   your machine and nowhere else.
+   never absolute paths. Absolute paths work only on
+   the machine where they were written.
 4. **The `draft` field defaults to `false` when
    omitted.** If you forget to set `draft: false`,
    your unfinished post appears on the public site
@@ -514,20 +512,20 @@ deployment failures.*
 
 Converting standalone markdown documentation into
 a ZZCOLLAB blog post is a systematic, repeatable
-process that takes roughly 40 minutes once you
-understand the workflow. The dual-symlink system
+process that takes roughly 40 minutes once one
+understands the workflow. The dual-symlink system
 bridges the gap between Quarto's directory
 expectations and the rrtools research compendium
-layout, and proper YAML metadata ensures your
+layout, and proper YAML metadata ensures that the
 content is discoverable through search and category
 filtering.
 
 The key insight from developing this workflow is
-that the barrier to publishing is not the
-conversion itself but the lack of a structured
-process. Once the steps are documented and the
-checklist is in place, each subsequent conversion
-is faster and less error-prone.
+that the barrier to publishing is not the conversion
+itself but the absence of a structured process.
+Once the steps are documented and the checklist is
+in place, each subsequent conversion is faster and
+less error-prone.
 
 For those with documentation sitting in project
 directories that could benefit a broader audience,
@@ -535,16 +533,20 @@ this workflow merits consideration. The initial
 investment in understanding the symlink system pays
 dividends every time another document is converted.
 
-Main takeaways:
-
-- The dual-symlink system is the architectural
-  foundation; understand it first.
-- YAML metadata drives discoverability; invest time
-  in titles, descriptions, and categories.
-- A pre-publication checklist prevents the most
-  common failures.
-- The entire process takes about 40 minutes from
-  assessment to committed post.
+In conclusion, four points merit emphasis. First,
+the dual-symlink system is the architectural
+foundation of the workflow, and understanding its
+logic is a prerequisite for everything that follows.
+Second, YAML metadata drives discoverability, and
+the time invested in titles, descriptions, and
+categories compounds across every subsequent
+rendering and indexing of the post. Third, a
+pre-publication checklist prevents the most common
+failures, particularly broken image paths and
+incorrectly set draft flags. Fourth, the entire
+process requires approximately 40 minutes from
+initial assessment to a committed, publishable
+post.
 
 # See Also
 
